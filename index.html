@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yusron</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <link rel="stylesheet" href="dist/output.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://kit.fontawesome.com/84b3827d3d.js" crossorigin="anonymous"></script>
+  </head>
+  <body class="bg-slate-300">
+    <!-- Navbar -->
+    <header class="bg-white absolute top-0 left-0 w-full flex items-center z-10">
+      <div class="container">
+          <div class="flex items-center justify-between relative">
+              <div class="px-4">
+                  <a href="#home" class="font-bold text-lg text-primary block py-6">YusronFN</a>
+              </div>
+              <div class="flex items-center px-4">
+                  <nav id="nav-menu" class="hidden absolute py-5 bg-white shadow-lg rounded-lg max-w-[250px] w-full right-4 top-full lg:block lg:static lg:bg-transparent lg:max-w-full lg:shadow-none lg:rounded-none">
+                      <ul class="block lg:flex">
+                          <li class="group">
+                              <a href="#home" class="text-base text-dark py-2 mx-8 flex hover:text-primary">Beranda</a>
+                          </li>
+                      </ul>
+                  </nav>
+              </div>
+          </div>
+      </div>
+    </header>
+    <!-- Akhir Navbar -->
+    <div id="app">
+      <div class="mt-24 w-full flex justify-center items-center flex-col gap-y-4">
+        <div>
+          <h1 class="text-center font-bold text-2xl mb-3">Data Planet</h1>
+          <table class="bg-white rounded-lg shadow-lg border-separate [border-spacing:0.5rem] p-5">
+            <thead class="">
+              <tr>
+                <th>No</th>
+                <th>Nama Planet</th>
+                <th>Diameter Planet</th>
+                <th>Gravitasi Planet</th>
+                <th>Keterangan Planet</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody class="text-center">
+              <tr class="" v-for="(item, index) in planet.list" :key="index">
+                <td>{{index+1}}</td>
+                <td>{{item.nama_planet}}</td>
+                <td>{{item.diameter}} KM</td>
+                <td>{{item.gravitasi}} m/s</td>
+                <td>{{item.keterangan ? `${item.keterangan}`:"-"}}</td>
+                <td>
+                    <span class="bg-amber-400 p-0.5 rounded-lg hover:bg-white outline outline-amber-400 mr-2 hover:cursor-pointer justify-center" 
+                    @click="getPlanetById(item.id)">
+                      Ubah
+                    </span>
+                    <span class="bg-red-600 p-0.5 rounded-lg hover:bg-white outline outline-red-600 hover:cursor-pointer" @click="deletePlanet(item.id)">Hapus</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="w-1/2 ">
+            <h1 class="text-center font-bold text-2xl">{{ planet.isUpdate ? 'Ubah' : 'Tambah'}} Planet</h1>
+            <div class="form mt-3">
+              <form @submit.prevent="planet.isUpdate ? updatePlanet() : createPlanet()" class="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4" >
+                <div class="mb-4">
+                  <label class="block text-slate-800 text-sm font-bold mb-2" for="planetName">
+                    Nama Planet
+                  </label>
+                  <input v-model="planet.nama_planet" class="bg-white appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:bg-slate-200" id="planetName" type="text" placeholder="Nama Planet">
+                </div>
+                <div class="mb-4">
+                  <label class="block text-slate-800 text-sm font-bold mb-2" for="planetName">
+                    Diameter Planet (KM)
+                  </label>
+                  <input v-model="planet.diameter" class="bg-white appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:bg-slate-200" id="planetName" type="text" placeholder="Diameter Planet">
+                </div>
+                <div class="mb-4">
+                  <label class="block text-slate-800 text-sm font-bold mb-2" for="planetName">
+                    Gravitasi Planet (m/s)
+                  </label>
+                  <input v-model="planet.gravitasi" class="bg-white appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:bg-slate-200" id="planetName" type="text" placeholder="Gravitasi Planet">
+                </div>
+                <div class="mb-4">
+                  <label class="block text-slate-800 text-sm font-bold mb-2" for="planetName">
+                    Keterangan Planet
+                  </label>
+                  <input v-model="planet.keterangan" class="bg-white appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:bg-slate-200" id="planetName" type="text" placeholder="Keterangan Planet">
+                </div>
+                <button type="submit" class="border bg-blue-800 text-white p-2 rounded-full text-base mt-4">{{ planet.isUpdate ? 'Ubah' : 'Tambah'}}</button>
+              </form>
+            </div>
+        </div>
+      </div>
+    </div>
+    
+    <script src="dist/js/script.js"></script>
+    <script src="./index.js"></script>
+</body>
+</html>
